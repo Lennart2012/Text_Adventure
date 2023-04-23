@@ -83,7 +83,7 @@
     </div>
 
 </body>
-<script defer>
+<script>
     var elem = document.documentElement;
     /* View in fullscreen */
     function activateFullscreen(element) {
@@ -137,29 +137,31 @@
         }
     }
 
-    function addText(text) {
-        const ul = document.getElementById('conversation');
+    addText('There is an text')
+    
+
+
+    async function addText(text) {
+        const conversation = document.getElementById('conversation');
         const li = document.createElement('li');
-        ul.appendChild(li);
+        conversation.appendChild(li);
 
-        const chars = text.split('');
-        let index = 0;
-        const intervalId = setInterval(() => {
-            li.innerHTML += chars[index++];
-            if (index === chars.length) clearInterval(intervalId);
-        }, 100);
+        let i = 0;
+        const printChar = () => {
+            if (i < text.length) {
+                li.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(printChar, 50); // Hier kannst du die Geschwindigkeit ändern
+            }
+        };
+        printChar();
     }
-    addText('Hello World');
-    addInput('Write something');
+    async function addInput(text) {
+        document.getElementById('conversation').innerHTML = document.getElementById('conversation').innerHTML + "<li>" + text + "</li>" + " <input id='command' type='text' class='input'></input>" + "<button onclick='sendGameRequest()' type='submit'>Submit answer</button>"
+    }
 
-    function addInput(text) {
-        // let conv = document.getElementById('conversation');
-        // conv.innerHTML = conv.innerHTML + "<li>" + text + "</li>" + " <input id='command' type='text' class='input'></input>" + "<button onclick='sendGameRequest()' type='submit'>Submit answer</button>"
-        addListItem(document.querySelector("#conversation"), text, true);
-    }
 
     async function sendGameRequest() {
-
 
         let gameRequest = {
             Input: document.querySelector("#command").value
@@ -179,27 +181,9 @@
     }
 
     function updateUi(gameResponse) {
-
-        
-        let node = document.querySelector(".inputControl");
-        if (node) {
-            node.remove();
-        }
-
-        addListItem(document.querySelector("#conversation"), gameResponse.text);
-    }
-
-    function addListItem(list, text, addInputButton) {
+        let conversationList = document.querySelector("#conversation");
         var li = document.createElement("li");
-        li.appendChild(document.createTextNode(text));
-        list.appendChild(li);
-
-        if (addInputButton) {
-
-            let inputElem = document.createElement("span");
-            inputElem.classList.add("inputControl")
-            inputElem.innerHTML = "<input id='command' type='text' class='input'></input>" + "<button onclick='sendGameRequest()' type='submit'>Submit answer</button>";
-            li.append(inputElem);
-        }
+        li.appendChild(document.createTextNode(gameResponse.text));
+        conversationList.appendChild(li);
     }
 </script>
