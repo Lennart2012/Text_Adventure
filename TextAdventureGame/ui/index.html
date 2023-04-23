@@ -1,25 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Text Adventure</title>
+    <link rel="icon" type="image/x-icon" href="/img/favicon.ico">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        #storyboard {
+            background-color: #000;
+            margin: 0;
+            border-radius: 20px;
+            height: 98vh;
+
+        }
+
+        body {
+            background-color: grey;
+            margin-right: 10px;
+        }
+
+
+        li {
+            font-size: 25px;
+            margin-left: 50px;
+            position: relative;
+        }
+
+        li:before {
+            content: '>';
+            position: absolute;
+            left: -30px;
+            color: #fff;
+            font-size: 25px;
+        }
+
+        #fullscreen {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 100px;
+            height: auto;
+        }
+
+        #conversation {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            height: calc(100% - 70px);
+            padding: 10px;
+            color: #fff;
+            font-family: monospace;
+            display: inline;
+            list-style: none;
+            margin: 0;
+            overflow-y: auto;
+            font-size: 25px;
+        }
+
+
+
+        #title {
+            position: fixed;
+        }
+
+        .command {
+            background-color: transparent;
+            color: white;
+        }
+    </style>
 </head>
+
+
 <body>
-<h1>Text Adventure</h1>
+    <img id="fullscreen" src="img/fullscreen.png" alt="fullscreen button"
+        onclick="toggleFullscreen(document.documentElement)">
+    <div id="storyboard">
+        <ul id="conversation"></ul>
 
-<div>
-    <label for="command">&gt;</label>
-    <input id="command">
-    <button onclick="sendGameRequest()">Send</button>
-</div>
-<div>
-    <ul id="conversation">
-        <li>...</li>
-    </ul>
-</div>
+    </div>
+    
+</body>
+<script>
+    var elem = document.documentElement;
+    /* View in fullscreen */
+    function activateFullscreen(element) {
+        if (element.requestFullscreen) {
+            element.requestFullscreen();
+        } else if (element.mozRequestFullScreen) {
+            element.mozRequestFullScreen();
+        } else if (element.webkitRequestFullscreen) {
+            element.webkitRequestFullscreen();
+        } else if (element.msRequestFullscreen) {
+            element.msRequestFullscreen();
+        }
+    }
+    function deactivateFullscreen() {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+    }
+    function toggleFullscreen(element) {
+        if (!document.fullscreenElement &&    // Falls kein Element im Vollbildmodus ist
+            !document.mozFullScreenElement && // Firefox
+            !document.webkitFullscreenElement && // Chrome, Safari und Opera
+            !document.msFullscreenElement) {  // IE/Edge
+            // Aktiviere Vollbildmodus, wenn nicht bereits aktiviert
+            if (element.requestFullscreen) {
+                element.requestFullscreen();
+            } else if (element.mozRequestFullScreen) {
+                element.mozRequestFullScreen();
+            } else if (element.webkitRequestFullscreen) {
+                element.webkitRequestFullscreen();
+            } else if (element.msRequestFullscreen) {
+                element.msRequestFullscreen();
+            }
+        } else {
+            // Deaktiviere Vollbildmodus, wenn bereits aktiviert
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+        }
+    }
 
+    function addText(text) {
+        const ul = document.getElementById('text');
+        const li = document.createElement('li');
+        ul.appendChild(li);
 
-<script defer>
+        const chars = text.split('');
+        let index = 0;
+        const intervalId = setInterval(() => {
+            li.innerHTML += chars[index++];
+            if (index === chars.length) clearInterval(intervalId);
+        }, 100);
+    }
+    addInput('Send something')
+
+    function addInput(text) {
+        document.getElementById('conversation').innerHTML = document.getElementById('conversation').innerHTML + "<li>" + text + "</li>" + " <input id='command' type='text' class='input'></input>" + "<button onclick='sendGameRequest()' type='submit'>Submit answer</button>"
+
+    }
 
     async function sendGameRequest() {
 
@@ -46,8 +181,4 @@
         li.appendChild(document.createTextNode(gameResponse.text));
         conversationList.appendChild(li);
     }
-
 </script>
-
-</body>
-</html>
