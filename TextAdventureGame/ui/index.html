@@ -149,15 +149,13 @@
             if (index === chars.length) clearInterval(intervalId);
         }, 100);
     }
-    addText('Hello World');
-    addInput('Write something');
-
     function addInput(text) {
         // let conv = document.getElementById('conversation');
         // conv.innerHTML = conv.innerHTML + "<li>" + text + "</li>" + " <input id='command' type='text' class='input'></input>" + "<button onclick='sendGameRequest()' type='submit'>Submit answer</button>"
         addListItem(document.querySelector("#conversation"), text, true);
     }
 
+    addInput('hallo')
     async function sendGameRequest() {
 
 
