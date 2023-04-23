@@ -23,14 +23,14 @@ using System;namespace LocationStructs
     }
     public  class Locations
     {
-        public static Location Cave = new Location("You find yourself in a Cave.", 1, new Location[2], false, "Return");
-        public static Location HelpCame = new Location("You wait.................................................You hear someone talking. Another person is answering.", 6, new Location[1],false, "Wait");
+        public static Location Cave = new Location("You find yourself in a Cave. ", 1, new Location[3], false, "Return");
+        public static Location HelpCame = new Location("You wait.................................................You hear someone talking. Another person is answering. ", 6, new Location[1],false, "Wait");
         public static Location OutsideOfCave = new Location("After what seems like an eternity, you can finally see a light in the distance. After your eyes finished adjusting to the life-giving light of the sun, you look around. You can see a Village in the distance and hear the rushing of a river. we didnt have the time to add more story so here you go you won yay ", 5, new Location[1], false, "Escape");
         public static Location BleedingCave = new Location("You start to crawl in a random direction. But you cant see the walls in the Darkness, so you accidentally hurt your hand trying to move around. ", 4, new Location[3],true, "Escape" );
-        public static Location TalkToThem = new Location("You introduce yourself to them, and they take you outside.", 9,new Location[1],false, "Talk");
+        public static Location TalkToThem = new Location("You introduce yourself to them, and they take you outside. ", 9,new Location[1],false, "Talk");
         public static void SetUpGoTo()
         {
-            Cave.GoTo = new Location[2]{HelpCame, BleedingCave};
+            Cave.GoTo = new Location[3]{HelpCame, BleedingCave, Cave};
             BleedingCave.GoTo = new Location[3]{OutsideOfCave,HelpCame, Cave};
             OutsideOfCave.GoTo = new Location[1]{OutsideOfCave};
             HelpCame.GoTo = new Location[1]{TalkToThem};
