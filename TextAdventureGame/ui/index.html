@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Text Adventure</title>
+</head>
+<body>
+<h1>Text Adventure</h1>
+
+<div>
+    <label for="command">&gt;</label>
+    <input id="command">
+    <button onclick="sendGameRequest()">Send</button>
+</div>
+<div>
+    <ul id="conversation">
+        <li>...</li>
+    </ul>
+</div>
+
+
+<script defer>
+
+    async function sendGameRequest() {
+
+        let gameRequest = {
+            Input: document.querySelector("#command").value
+        };
+
+        let response = await fetch("../command", {
+            method: "POST",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(gameRequest)
+        });
+
+        let gameResponse = await response.json();
+
+        updateUi(gameResponse);
+    }
+
+    function updateUi(gameResponse) {
+        let conversationList = document.querySelector("#conversation");
+        var li = document.createElement("li");
+        li.appendChild(document.createTextNode(gameResponse.text));
+        conversationList.appendChild(li);
+    }
+
+</script>
+
+</body>
+</html>
