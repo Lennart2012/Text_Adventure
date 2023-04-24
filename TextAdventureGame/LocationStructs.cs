@@ -15,7 +15,6 @@ using System;namespace LocationStructs
             LivePenalty = u;
             name = n;
         }
-
     }
     class Dialogue
     {
