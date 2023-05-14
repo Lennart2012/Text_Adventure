@@ -21,7 +21,8 @@
 
         body {
             background-color: grey;
-            margin-right: 10px;
+            margin: 10px;
+            margin-bottom: 0%;
         }
 
 
@@ -90,12 +91,11 @@
 
     </div>
 
-    <div class="input-group mb-3 input">
+    <form action="return javascript:sendGameRequest()" class="input-group mb-3 input">
         <input id="command" type="text" class="form-control input" placeholder="Answer">
-        <button onclick='sendGameRequest()' class="button input btn btn-outline-secondary" type='submit'
+        <button class="button input btn btn-outline-secondary" type='submit'
             id="button-addon2">Send</button>
-    </div>
-
+    </form>
 </body>
 <script defer>
     var elem = document.documentElement;
