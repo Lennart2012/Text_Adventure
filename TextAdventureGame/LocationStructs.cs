@@ -1,4 +1,6 @@
-using System;namespace LocationStructs
+using System;
+using Dialogue;
+namespace LocationStructs
 {
     public class Location
     {
@@ -16,9 +18,10 @@ using System;namespace LocationStructs
             name = n;
         }
     }
-    class Dialogue
+    class Choice
     {
-        public static string Name = "";
+        public string label {get;set;}
+	public string name;
     }
     public  class Locations
     {
@@ -29,6 +32,7 @@ using System;namespace LocationStructs
         public static Location InFrontOfVillage = new Location("They dont seem keen on letting you in.", 9,new Location[1],false, "Village");
 
         public static Location TalkToThem = new Location("You introduce yourself to them, and they take you outside. ", 9,new Location[1],false, "Talk");
+	
         public static void SetUpGoTo()
         {
             Cave.GoTo = new Location[3]{HelpCame, BleedingCave, Cave};
